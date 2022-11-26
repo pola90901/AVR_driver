@@ -59,10 +59,24 @@ void LCD_void_write(u8 Copy_u8_val)
 	DIO_u8Set_Pin_value(LCD_u8_ctrl_PORT,LCD_u8_ENAble_Pin,LCD_u8_Enable_LOW);
 	_delay_ms(2);
 
+}
 
-
-
+void LCD_void_Set_DDRam_ADD(u8 Copy_u8DDRAM_ADD)
+{
+	LCD_void_wirte_command(0b10000000|Copy_u8DDRAM_ADD);
 
 }
+
+void LCD_void_Display_String(u8*Ptr_u8String,u8 Copy_u8X_pos,u8 Copy_u8Y_pos)
+{
+	u8 Loc_u8_DDramAD=Copy_u8X_pos+(64*Copy_u8Y_pos);
+	LCD_void_Set_DDRam_ADD(Loc_u8_DDramAD);
+	while(*Ptr_u8String!='\0')
+
+		LCD_void_wirte_data(*Ptr_u8String);
+		Ptr_u8String++;
+
+	}
+
 
 
