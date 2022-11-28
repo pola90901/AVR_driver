@@ -27,11 +27,8 @@ void LCD_void_inti()
 }
 void LCD_void_wirte_command(u8 Copy_u8_cmd)
 {
-
 	DIO_u8Set_Pin_value(LCD_u8_ctrl_PORT,LCD_u8_RS_Pin,LCD_u8_RS_CMD);
 	LCD_void_write(Copy_u8_cmd);
-
-
 }
 void LCD_void_wirte_data(u8 Copy_u8_data)
 {
@@ -52,8 +49,6 @@ void LCD_void_write(u8 Copy_u8_val)
 	DIO_u8Set_Pin_value(LCD_u8_DATA_PORT,LCD_u8_DATA_PIN_5,Get_bit(Copy_u8_val,5));
 	DIO_u8Set_Pin_value(LCD_u8_DATA_PORT,LCD_u8_DATA_PIN_6,Get_bit(Copy_u8_val,6));
 	DIO_u8Set_Pin_value(LCD_u8_DATA_PORT,LCD_u8_DATA_PIN_7,Get_bit(Copy_u8_val,7));
-
-
 	DIO_u8Set_Pin_value(LCD_u8_ctrl_PORT,LCD_u8_ENAble_Pin,LCD_u8_enable_HIGH);
 	_delay_ms(2);
 	DIO_u8Set_Pin_value(LCD_u8_ctrl_PORT,LCD_u8_ENAble_Pin,LCD_u8_Enable_LOW);
@@ -77,6 +72,14 @@ void LCD_void_Display_String(u8*Ptr_u8String,u8 Copy_u8X_pos,u8 Copy_u8Y_pos)
 		Ptr_u8String++;
 
 	}
+
+
+void LCD_Set_CG_RAM_ADD(u8 Copy_uCGRAM_ADD){
+
+	LCD_void_wirte_command(0b01000000|Copy_uCGRAM_ADD);
+
+
+}
 
 
 
