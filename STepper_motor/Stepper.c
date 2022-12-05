@@ -1,0 +1,194 @@
+/*
+ * Stepper.c
+ *
+ *  Created on: Dec 3, 2022
+ *      Author: 1
+ */
+
+#include"types.h"
+#include"util.h"
+#include"DIO_Interface.h"
+#include <avr/delay.h>
+#include "Stepper_config.h"
+#include"stepper_intrface.h"
+
+
+
+void Stepper_voidInit(void)
+{
+	DIO_u8Set_Pin_direction(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_OUTPUT);
+	DIO_u8Set_Pin_direction(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_OUTPUT);
+	DIO_u8Set_Pin_direction(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_OUTPUT);
+	DIO_u8Set_Pin_direction(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_OUTPUT);
+}
+
+void Stepper_voidRotate_clockwise_FullStep(void)
+{
+
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(10);
+
+}
+
+void Stepper_voidRotate_Anticlockwise_FullStep(void)
+{
+
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(2);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(2);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(2);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(2);
+
+}
+void Stepper_voidRotate_clockwise_HalfStep(void)
+{
+
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(10);
+
+}
+void Stepper_voidRotate_Anticlockwise_HalfStep(void)
+{
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_LOW);
+	_delay_ms(10);
+
+
+
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_BLUE,DIO_u8_HIGH);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_PINK,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_YELLOW,DIO_u8_LOW);
+	DIO_u8Set_Pin_value(STEPPER_u8_COIL_PORT,STEPPER_u8Coil_ORANGE,DIO_u8_HIGH);
+	_delay_ms(10);
+
+
+}
+
+void Stepper_void_Set_angle(u32 Copy_u32Angle,u8 Copy_u8Direction )
+{
+	u32 Local_u16Full_Steps=(Copy_u32Angle*2048)/360;
+	u32 index;
+	//u32 var=Local_u16Full_Steps/4;
+	if (Copy_u8Direction==STEPPER_u8CW_DIR)
+	{
+		for(index=0;index<Local_u16Full_Steps/4;index++)
+		{
+			Stepper_voidRotate_clockwise_FullStep();
+		}
+
+	}else if(Copy_u8Direction==STEPPER_u8ACW_DIR){
+
+		for(index=0;index<Local_u16Full_Steps/4;index++)
+		{
+			Stepper_voidRotate_Anticlockwise_FullStep();
+		}
+
+	}
+
+
+
+}
