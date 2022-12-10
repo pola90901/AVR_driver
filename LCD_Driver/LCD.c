@@ -11,11 +11,8 @@ void LCD_void_inti()
 {
 	DIO_u8Set_PORT_direction(LCD_u8_ctrl_PORT,255);
 	DIO_u8Set_PORT_direction(LCD_u8_DATA_PORT,255);
-
 	_delay_ms(40);
-
 	LCD_void_wirte_command(0b00111000);//Function set (8 bit mode , 2 lines , 5x7 format).
-
 	_delay_us(50);
 	LCD_void_wirte_command(0b00001100);//Display ON/OFF control. (Display ON , cursor ON , blinking off)
 	_delay_us(50);
@@ -64,15 +61,15 @@ void LCD_void_Set_DDRam_ADD(u8 Copy_u8DDRAM_ADD)
 
 void LCD_void_Display_String(u8*Ptr_u8String,u8 Copy_u8X_pos,u8 Copy_u8Y_pos)
 {
-	u8 Loc_u8_DDramAD=Copy_u8X_pos+(64*Copy_u8Y_pos);
+	u32 Loc_u8_DDramAD=Copy_u8X_pos+(64*Copy_u8Y_pos);
 	LCD_void_Set_DDRam_ADD(Loc_u8_DDramAD);
-	while(*Ptr_u8String!='\0')
+	while(*Ptr_u8String !='\0')
 
-		LCD_void_wirte_data(*Ptr_u8String);
-		Ptr_u8String++;
+	{	LCD_void_wirte_data(*Ptr_u8String);
+	Ptr_u8String++;
 
 	}
-
+}
 
 void LCD_Set_CG_RAM_ADD(u8 Copy_uCGRAM_ADD){
 
@@ -81,5 +78,86 @@ void LCD_Set_CG_RAM_ADD(u8 Copy_uCGRAM_ADD){
 
 }
 
+void LCD_wirte_number(u32 Num)
+{
+	u8 arr[11];
+	u32 temp,i=0,j=0,w=0;
+	// filling array with number reversed in order
+	while(Num!=0)
+	{
+		temp=Num%10;
+		arr[i]=temp;
+		i++;
+		Num/=10;
+	}
+	arr[i]='x';
+	i--;
+	// re arrange the array
+	while(j<i)
+	{
+		// swap
+		temp=arr[j];
+		arr[j]=arr[i];
+		arr[i]=temp;
+		j++;
+		i--;
+	}
+	while(arr[w]!='x')
+	{
+		LCD_void_wirte_data(arr[w]+'0');
+		w++;
+	}
 
 
+}
+
+void LCD_wirte_number_float(f32 Num)
+{
+	u8 arr_Dec[3];
+	u8 arr_int[11];
+	u32 temp,temp2,i=0,j=0,w=0;
+	// storing floating numbs in arr_Dec
+	temp=Num*100;
+	arr_Dec[1]=temp%10;
+	temp/=10;
+	arr_Dec[0]=temp%10;
+	temp/=10;
+	arr_Dec[2]='x';
+	while(temp!=0)
+	{
+		temp2=temp%10;
+		arr_int[i]=temp2;
+		i++;
+		temp/=10;
+	}
+	arr_int[i]='x';
+	i--;
+	// re arrange the array
+	while(j<i)
+	{
+		// swap
+		temp2=arr_int[j];
+		arr_int[j]=arr_int[i];
+		arr_int[i]=temp2;
+		j++;
+		i--;
+	}
+	while(arr_int[w]!='x')
+	{
+		LCD_void_wirte_data(arr_int[w]+'0');
+
+		w++;
+	}
+	LCD_void_wirte_data('.');
+
+	w=0;
+	while(arr_Dec[w]!='x')
+	{
+		LCD_void_wirte_data(arr_Dec[w]+'0');
+		w++;
+	}
+
+
+
+
+}

@@ -16,5 +16,9 @@ void LCD_void_inti(void);
 void LCD_void_Set_DDRam_ADD(u8 Copy_u8DDRAM_ADD);
 void LCD_void_Display_String(u8*Ptr_u8String,u8 Copy_u8X_pos,u8 Copy_u8Y_pos);
 void LCD_Set_CG_RAM_ADD(u8 Copy_uCGRAM_ADD);
+void LCD_wirte_number_float(f32 Num);
+
+
+void LCD_wirte_number(u32 Num);
 
 #endif /* LCD_INTERFACE_H_ */
