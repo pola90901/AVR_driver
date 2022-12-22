@@ -46,7 +46,7 @@ all: LCD_Driver.elf secondary-outputs
 LCD_Driver.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,LCD_Driver.map -mmcu=atmega16 -o "LCD_Driver.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,LCD_Driver.map -mmcu=atmega32 -o "LCD_Driver.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -64,7 +64,7 @@ LCD_Driver.hex: LCD_Driver.elf
 
 sizedummy: LCD_Driver.elf
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega16 LCD_Driver.elf
+	-avr-size --format=avr --mcu=atmega32 LCD_Driver.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
